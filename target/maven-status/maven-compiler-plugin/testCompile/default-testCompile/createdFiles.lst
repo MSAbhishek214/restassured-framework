@@ -1,0 +1,11 @@
+com\darkuros\restassured\stepdefinitions\CommonSteps.class
+com\darkuros\restassured\payloads\PayloadBuilder.class
+com\darkuros\restassured\stepdefinitions\DeletePlaceSteps.class
+com\darkuros\restassured\runners\UpdatePlaceRunner.class
+com\darkuros\restassured\stepdefinitions\GetPlaceSteps.class
+com\darkuros\restassured\stepdefinitions\UpdatePlaceSteps.class
+com\darkuros\restassured\runners\DeletePlaceRunner.class
+com\darkuros\restassured\runners\Runner.class
+com\darkuros\restassured\stepdefinitions\AddPlaceSteps.class
+com\darkuros\restassured\runners\GetPlaceRunner.class
+com\darkuros\restassured\runners\AddPlaceRunner.class
