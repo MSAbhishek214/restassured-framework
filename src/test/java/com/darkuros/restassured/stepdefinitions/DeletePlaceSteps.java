@@ -4,7 +4,7 @@ import static com.darkuros.restassured.utils.FrameworkConstants.API_KEY_NAME;
 import static com.darkuros.restassured.utils.FrameworkConstants.API_KEY_VALUE;
 import static com.darkuros.restassured.utils.FrameworkConstants.BASE_URL;
 
-import com.darkuros.restassured.model.DeletePlace;
+import com.darkuros.restassured.payloadfactory.PayloadFactory;
 
 import io.cucumber.java.en.Given;
 import io.restassured.RestAssured;
@@ -19,12 +19,9 @@ public class DeletePlaceSteps {
 
 	@Given("Delete Place Payload")
 	public void deletePlacePayload() {
-		// Create a payload for deleting a place
-		DeletePlace deletePlace = new DeletePlace();
-		deletePlace.setPlaceId(commonSteps.getPlaceId());
 		RestAssured.baseURI = BASE_URL;
 		commonSteps.setReq(RestAssured.given().log().ifValidationFails().queryParam(API_KEY_NAME, API_KEY_VALUE)
-				.header("Content-Type", "application/json").body(deletePlace));
+				.header("Content-Type", "application/json").body(PayloadFactory.deletePlacePayload(commonSteps.getPlaceId())));
 	}
 
 }
