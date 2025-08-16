@@ -3,6 +3,10 @@ package com.darkuros.restassured.stepdefinitions;
 import io.cucumber.java.en.Given;
 import io.restassured.RestAssured;
 
+import static com.darkuros.restassured.utils.FrameworkConstants.API_KEY_NAME;
+import static com.darkuros.restassured.utils.FrameworkConstants.API_KEY_VALUE;
+import static com.darkuros.restassured.utils.FrameworkConstants.BASE_URL;
+
 public class GetPlaceSteps {
 
 	private final CommonSteps commonSteps;
@@ -13,8 +17,8 @@ public class GetPlaceSteps {
 
 	@Given("Get Place Payload with a place id")
 	public void getPlace() {
-		RestAssured.baseURI = "https://rahulshettyacademy.com";
-		commonSteps.setReq(RestAssured.given().log().all().queryParam("key", "qaclick123")
+		RestAssured.baseURI = BASE_URL;
+		commonSteps.setReq(RestAssured.given().log().ifValidationFails().queryParam(API_KEY_NAME, API_KEY_VALUE)
 				.queryParam("place_id", commonSteps.getPlaceId()).header("Content-Type", "application/json"));
 	}
 

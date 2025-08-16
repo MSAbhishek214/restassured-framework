@@ -1,5 +1,9 @@
 package com.darkuros.restassured.stepdefinitions;
 
+import static com.darkuros.restassured.utils.FrameworkConstants.BASE_URL;
+import static com.darkuros.restassured.utils.FrameworkConstants.API_KEY_NAME;
+import static com.darkuros.restassured.utils.FrameworkConstants.API_KEY_VALUE;
+
 import com.darkuros.restassured.payloads.PayloadBuilder;
 
 import io.cucumber.java.en.Given;
@@ -15,8 +19,8 @@ public class DeletePlaceSteps {
 
 	@Given("Delete Place Payload")
 	public void deletePlacePayload() {
-		RestAssured.baseURI = "https://rahulshettyacademy.com";
-		commonSteps.setReq(RestAssured.given().log().all().queryParam("key", "qaclick123")
+		RestAssured.baseURI = BASE_URL;
+		commonSteps.setReq(RestAssured.given().log().ifValidationFails().queryParam(API_KEY_NAME, API_KEY_VALUE)
 				.header("Content-Type", "application/json")
 				.body(PayloadBuilder.deletePlacePayload(commonSteps.getPlaceId())));
 	}

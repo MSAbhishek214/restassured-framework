@@ -1,5 +1,9 @@
 package com.darkuros.restassured.stepdefinitions;
 
+import static com.darkuros.restassured.utils.FrameworkConstants.BASE_URL;
+import static com.darkuros.restassured.utils.FrameworkConstants.API_KEY_NAME;
+import static com.darkuros.restassured.utils.FrameworkConstants.API_KEY_VALUE;
+
 import com.darkuros.restassured.payloads.PayloadBuilder;
 
 import io.cucumber.java.en.Given;
@@ -18,9 +22,9 @@ public class AddPlaceSteps {
 	@Given("Add Place Payload with name {string}, language {string}, and address {string}")
 	public void addPlacePayload(String name, String language, String address) {
 		// Base URI for the API
-		RestAssured.baseURI = "https://rahulshettyacademy.com";
+		RestAssured.baseURI = BASE_URL;
 		// Create a request specification with query parameters and headers
-		commonSteps.setReq(RestAssured.given().log().all().queryParam("key", "qaclick123")
+		commonSteps.setReq(RestAssured.given().log().ifValidationFails().queryParam(API_KEY_NAME, API_KEY_VALUE)
 				.header("Content-Type", "application/json")
 				.body(PayloadBuilder.addPlacePayload(name, language, address)));
 	}

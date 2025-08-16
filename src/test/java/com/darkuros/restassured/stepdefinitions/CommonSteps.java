@@ -12,7 +12,7 @@ public class CommonSteps {
 
 	private RequestSpecification req; // Request specification for API calls
 	private Response res; // Response object to hold API responses
-	private String place_id; // Variable to store place ID
+	private String placeId; // Variable to store place ID
 	
 	public CommonSteps() {
 		// Default constructor for dependency injection
@@ -36,11 +36,11 @@ public class CommonSteps {
 	}
 	
 	public String getPlaceId() {
-		return place_id;
+		return placeId;
 	}
 	
-	public void setPlaceId(String place_id) {
-		this.place_id = place_id;
+	public void setPlaceId(String placeId) {
+		this.placeId = placeId;
 	}
 
 	// Method to set up the request specification with base URI and headers
