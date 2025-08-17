@@ -1,13 +1,12 @@
 package com.darkuros.restassured.model;
 
-import com.darkuros.restassured.utils.FrameworkConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UpdatePlace {
 	@JsonProperty("place_id")
 	private String placeId;
 	private String address;
-	private final String key = FrameworkConstants.API_KEY_VALUE;
+	private String key;
 
 	public String getPlaceId() {
 		return placeId;
@@ -26,7 +25,10 @@ public class UpdatePlace {
 	}
 
 	public String getKey() {
-		return key; // API key is constant and does not need to be set, only getter is needed for
-					// jackson serialization.
+		return key;
+	}
+	
+	public void setKey(String key) {
+		this.key = key;
 	}
 }

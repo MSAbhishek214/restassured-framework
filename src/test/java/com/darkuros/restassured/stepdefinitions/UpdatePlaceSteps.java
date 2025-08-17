@@ -1,8 +1,6 @@
 package com.darkuros.restassured.stepdefinitions;
 
-import static com.darkuros.restassured.utils.FrameworkConstants.API_KEY_NAME;
-import static com.darkuros.restassured.utils.FrameworkConstants.API_KEY_VALUE;
-import static com.darkuros.restassured.utils.FrameworkConstants.BASE_URL;
+import com.darkuros.restassured.utils.ConfigReader;
 
 import com.darkuros.restassured.payloadfactory.PayloadFactory;
 
@@ -19,10 +17,12 @@ public class UpdatePlaceSteps {
 
 	@Given("Update Place Payload with new address {string}")
 	public void updatePlace(String newAddress) {
-		RestAssured.baseURI = BASE_URL;
-		commonSteps.setReq(RestAssured.given().log().ifValidationFails().queryParam(API_KEY_NAME, API_KEY_VALUE)
+		RestAssured.baseURI = ConfigReader.getProperty("base.url");
+		commonSteps.setReq(RestAssured.given().log().ifValidationFails()
+				.queryParam(ConfigReader.getProperty("api.key.name"), ConfigReader.getProperty("api.key.value"))
 				.queryParam("place_id", commonSteps.getPlaceId()).header("Content-Type", "application/json")
-				.body(PayloadFactory.updatePlacePayload(commonSteps.getPlaceId(), newAddress)));
+				.body(PayloadFactory.updatePlacePayload(commonSteps.getPlaceId(), newAddress,
+						ConfigReader.getProperty("api.key.value"))));
 	}
 
 }

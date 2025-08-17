@@ -31,10 +31,11 @@ public class PayloadFactory {
 		return addPlace;
 	}
 
-	public static UpdatePlace updatePlacePayload(String placeId, String newAddress) {
+	public static UpdatePlace updatePlacePayload(String placeId, String newAddress, String key) {
 		UpdatePlace updatePlace = new UpdatePlace();
 		updatePlace.setPlaceId(placeId);
 		updatePlace.setAddress(newAddress);
+		updatePlace.setKey(key);
 		return updatePlace;
 
 	}
