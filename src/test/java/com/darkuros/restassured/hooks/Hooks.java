@@ -10,8 +10,6 @@ public class Hooks {
 	 */
 	@BeforeAll
     public static void initialize() {
-        System.out.println("Initializing ConfigReader...");
         ConfigReader.initialize();
-        System.out.println("ConfigReader initialized successfully.");
     }
 }

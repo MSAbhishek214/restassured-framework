@@ -3,7 +3,7 @@ Feature: Add Place API
 
   Scenario: Successfully add a new place
     Given Add Place Payload with name "Darkuros Cafe", language "English", and address "Bengaluru South"
-    When user calls "/maps/api/place/add/json" with "POST" http request
+    When user calls "ADD_PLACE" with "POST" http request
     Then the API call is successful with status code 200
     And "status" in response body is "OK"
     And "scope" in response body is "APP"
