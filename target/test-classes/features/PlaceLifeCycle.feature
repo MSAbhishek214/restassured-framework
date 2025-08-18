@@ -1,8 +1,10 @@
 @PlaceLifeCycle
 Feature: End to End Place Life Cycle
 	
-	Scenario: Successfully create a place, fetch by place id, update it, and delete it
-	    Given Add Place Payload with name "Darkuros Cafe", language "English", and address "Bengaluru South"
+	Scenario Outline: Successfully create and validate different places
+	    Given Add Place Payload with name "<name>", language "<language>", and address "<address>"
+        When user calls "ADD_PLACE" with "POST" http request
+        Then the API call is successful with status code 200
 	    When user calls "ADD_PLACE" with "POST" http request
 	    Then the API call is successful with status code 200
 	    And "status" in response body is "OK"
@@ -33,3 +35,7 @@ Feature: End to End Place Life Cycle
 		When user calls "GET_PLACE" with "GET" http request
 		Then the API call is successful with status code 404
 		And "msg" in response body is "Get operation failed, looks like place_id  doesn't exists"
+		
+		Examples:
+	        | name            	| language | address            	|
+            | Darkuros Cafe   	| English  | Bengaluru South    	|

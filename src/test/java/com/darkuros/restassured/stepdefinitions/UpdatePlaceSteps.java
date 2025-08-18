@@ -1,27 +1,26 @@
 package com.darkuros.restassured.stepdefinitions;
 
-import com.darkuros.restassured.utils.ConfigReader;
-
 import com.darkuros.restassured.payloadfactory.PayloadFactory;
+import com.darkuros.restassured.utils.APIManager;
+import com.darkuros.restassured.utils.ConfigReader;
 
 import io.cucumber.java.en.Given;
 import io.restassured.RestAssured;
 
 public class UpdatePlaceSteps {
 
-	private final CommonSteps commonSteps;
+	private final ScenarioContext scenarioContext;
 
-	public UpdatePlaceSteps(CommonSteps commonSteps) {
-		this.commonSteps = commonSteps;
+	public UpdatePlaceSteps(ScenarioContext scenarioContext) {
+		this.scenarioContext = scenarioContext;
 	}
 
 	@Given("Update Place Payload with new address {string}")
 	public void updatePlace(String newAddress) {
 		RestAssured.baseURI = ConfigReader.getProperty("base.url");
-		commonSteps.setReq(RestAssured.given().log().ifValidationFails()
-				.queryParam(ConfigReader.getProperty("api.key.name"), ConfigReader.getProperty("api.key.value"))
-				.queryParam("place_id", commonSteps.getPlaceId()).header("Content-Type", "application/json")
-				.body(PayloadFactory.updatePlacePayload(commonSteps.getPlaceId(), newAddress,
+		scenarioContext.setReq(APIManager.getRequestSpec()
+				.queryParam("place_id", scenarioContext.getPlaceId())
+				.body(PayloadFactory.updatePlacePayload(scenarioContext.getPlaceId(), newAddress,
 						ConfigReader.getProperty("api.key.value"))));
 	}
 

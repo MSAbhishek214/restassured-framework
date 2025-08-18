@@ -1,5 +1,6 @@
 package com.darkuros.restassured.stepdefinitions;
 
+import com.darkuros.restassured.utils.APIManager;
 import com.darkuros.restassured.utils.ConfigReader;
 
 import io.cucumber.java.en.Given;
@@ -7,18 +8,18 @@ import io.restassured.RestAssured;
 
 public class GetPlaceSteps {
 
-	private final CommonSteps commonSteps;
+	private final ScenarioContext scenarioContext;
 
-	public GetPlaceSteps(CommonSteps commonSteps) {
-		this.commonSteps = commonSteps;
+	public GetPlaceSteps(ScenarioContext scenarioContext) {
+		this.scenarioContext = scenarioContext;
 	}
 
 	@Given("Get Place Payload with a place id")
 	public void getPlace() {
 		RestAssured.baseURI = ConfigReader.getProperty("base.url");
-		commonSteps.setReq(RestAssured.given().log().ifValidationFails()
-				.queryParam(ConfigReader.getProperty("api.key.name"), ConfigReader.getProperty("api.key.value"))
-				.queryParam("place_id", commonSteps.getPlaceId()).header("Content-Type", "application/json"));
+		scenarioContext.setReq(APIManager.getRequestSpec()
+				.queryParam("place_id", scenarioContext.getPlaceId())
+				.header("Content-Type", "application/json"));
 	}
 
 }
