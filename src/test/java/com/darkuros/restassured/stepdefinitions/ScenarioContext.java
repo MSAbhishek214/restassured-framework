@@ -1,5 +1,6 @@
 package com.darkuros.restassured.stepdefinitions;
 
+import io.cucumber.java.Scenario;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
@@ -9,6 +10,7 @@ public class ScenarioContext {
 	private RequestSpecification req; // Request specification for API calls
 	private Response res; // Response object to hold API responses
 	private String placeId; // Variable to store place ID
+	private Scenario scenario; // Scenario object to hold the current scenario
 
 	public ScenarioContext() {
 		// Default constructor for dependency injection
@@ -37,6 +39,14 @@ public class ScenarioContext {
 
 	public void setPlaceId(String placeId) {
 		this.placeId = placeId;
+	}
+
+	public Scenario getScenario() {
+		return scenario;
+	}
+
+	public void setScenario(Scenario scenario) {
+		this.scenario = scenario;
 	}
 
 }

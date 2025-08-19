@@ -1,8 +1,8 @@
 // CommonAPISteps.java
 package com.darkuros.restassured.stepdefinitions;
 
-import static org.hamcrest.Matchers.equalTo;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 import com.darkuros.restassured.utils.APIResources;
 
@@ -22,6 +22,7 @@ public class CommonAPISteps {
 	public void userCallsAPI(String resource, String method) {
 		APIResources resourceAPI = APIResources.valueOf(resource);
 		RequestSpecification requestSpec = scenarioContext.getReq();
+
 		switch (method.toUpperCase()) {
 		case "POST":
 			scenarioContext.setRes(given(requestSpec).when().post(resourceAPI.getResource()));
