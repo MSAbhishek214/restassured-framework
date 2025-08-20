@@ -15,6 +15,7 @@ import io.cucumber.java.Scenario;
 
 public class Hooks {
 	private final ScenarioContext scenarioContext;
+	private final APIManager apiManager; // This gets injected by PicoContainer
 
 	/**
 	 * This method is executed before all scenarios in the test suite.
@@ -27,8 +28,9 @@ public class Hooks {
 	/**
 	 * This method gets the scenario object from ScenarioContext.
 	 */
-	public Hooks(ScenarioContext scenarioContext) {
+	public Hooks(ScenarioContext scenarioContext, APIManager apiManager) {
 		this.scenarioContext = scenarioContext;
+		this.apiManager = apiManager;
 	}
 
 	/**
@@ -45,12 +47,12 @@ public class Hooks {
 	@After
 	public void tearDown(Scenario scenario) {
 		scenario.log("Scenario completed: " + scenario.getName());
-		
+
 		try {
-            Files.lines(Paths.get(APIManager.getLogFileName())).forEach(line -> scenario.log(line));
-        } catch (IOException e) {
-            scenario.log("Could not attach logs. Error: " + e.getMessage());
-        }
+			Files.lines(Paths.get(apiManager.getLogFileName())).forEach(line -> scenario.log(line));
+		} catch (IOException e) {
+			scenario.log("Could not attach logs. Error: " + e.getMessage());
+		}
 
 		/*
 		 * // The logic to attach console logs to the report byte[] consoleLogs = null;
@@ -58,10 +60,9 @@ public class Hooks {
 		 * File(APIManager.getLogFileName()).toPath()); } catch (IOException e) {
 		 * e.printStackTrace(); } // Only attach logs if they are not null if
 		 * (consoleLogs != null) { scenario.attach(consoleLogs, "text/plain",
-		 * "Console Logs"); }
-		 * This method doesnt attached the console logs to the report properly
-		 * I am gonna print each line from log to the report directly
-		 * instead of attaching the whole file.
+		 * "Console Logs"); } This method doesnt attached the console logs to the report
+		 * properly I am gonna print each line from log to the report directly instead
+		 * of attaching the whole file.
 		 */
 	}
 }

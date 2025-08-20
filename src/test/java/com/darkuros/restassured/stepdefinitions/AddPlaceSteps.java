@@ -11,10 +11,12 @@ import io.restassured.RestAssured;
 public class AddPlaceSteps {
 
 	private final ScenarioContext scenarioContext;
+	private final APIManager apiManager; // This gets injected by PicoContainer at runtime.
 
-	public AddPlaceSteps(ScenarioContext scenarioContext) {
+	public AddPlaceSteps(ScenarioContext scenarioContext, APIManager apiManager) {
 		// Initialize the request specification and response
 		this.scenarioContext = scenarioContext;
+		this.apiManager = apiManager;
 	}
 
 	@Given("Add Place Payload with name {string}, language {string}, and address {string}")
@@ -22,8 +24,8 @@ public class AddPlaceSteps {
 		// Base URI for the API
 		RestAssured.baseURI = ConfigReader.getProperty("base.url");
 		// Create a request specification with query parameters and headers
-		scenarioContext.setReq(APIManager.getRequestSpec()
-				.body(PayloadFactory.createPlacePayload(name, address, language)));
+		scenarioContext
+				.setReq(apiManager.getRequestSpec().body(PayloadFactory.createPlacePayload(name, address, language)));
 	}
 
 	@Then("store place_id from response")

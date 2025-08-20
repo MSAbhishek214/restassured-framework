@@ -39,3 +39,6 @@ Feature: End to End Place Life Cycle
 		Examples:
 	        | name            	| language | address            	|
             | Darkuros Cafe   	| English  | Bengaluru South    	|
+            | Darkuros Cafe   	| French   | Bengaluru South    	|
+            | Darkuros Cafe   	| Spanish  | Bengaluru South    	|
+            | Darkuros Cafe   	| German   | Bengaluru South    	|
