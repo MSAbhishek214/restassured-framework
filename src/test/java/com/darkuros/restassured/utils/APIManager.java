@@ -36,11 +36,15 @@ public final class APIManager {
 	}
 
 	public RequestSpecification getRequestSpec() {
-		return new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base.url"))
+		RequestSpecBuilder builder = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base.url"))
 				.addQueryParam(ConfigReader.getProperty("api.key.name"), ConfigReader.getProperty("api.key.value"))
-				.addHeader("Content-Type", "application/json")
-				.addFilter(new RequestLoggingFilter(LogDetail.ALL, logStream))
-				.addFilter(new ResponseLoggingFilter(LogDetail.ALL, logStream)).build();
+				.addHeader("Content-Type", "application/json");
+
+		if ("true".equalsIgnoreCase(System.getProperty("logging"))) {
+			builder.addFilter(new RequestLoggingFilter(LogDetail.ALL, logStream))
+					.addFilter(new ResponseLoggingFilter(LogDetail.ALL, logStream));
+		}
+		return builder.build();
 	}
 
 	public String getLogFileName() {
