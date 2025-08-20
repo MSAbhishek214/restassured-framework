@@ -13,5 +13,7 @@ import org.junit.platform.suite.api.Suite;
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.darkuros.restassured.stepdefinitions, com.darkuros.restassured.hooks")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty, html:target/cucumber-reports.html, json:target/cucumber-reports.json, com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:")
 @ConfigurationParameter(key = SNIPPET_TYPE_PROPERTY_NAME, value = "camelcase")
+@ConfigurationParameter(key = "cucumber.execution.parallel.enabled", value = "true")
+@ConfigurationParameter(key = "cucumber.execution.parallel.config.fixed.parallelism", value = "${parallel:1}")
 public class LifeCycleRunner {
 }

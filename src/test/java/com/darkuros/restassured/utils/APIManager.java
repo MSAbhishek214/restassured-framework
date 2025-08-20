@@ -1,5 +1,6 @@
 package com.darkuros.restassured.utils;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -18,35 +19,36 @@ import io.restassured.specification.RequestSpecification;
  * managing API requests, responses, and configurations.
  */
 public final class APIManager {
-	private static final String LOG_DIR = "target/logs/";
-	private static PrintStream logStream;
-	private static String logFileName;
+	private final String LOG_DIR = "target/logs/";
+	private PrintStream logStream;
+	private String logFileName;
 
-	static {
-		// This static block runs once when the class is loaded.
+	// Public no arg constructor for dependency injection by PicoContainer
+	public APIManager() {
 		String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
-		logFileName = LOG_DIR + "test-logs_" + timestamp + ".log";
+		this.logFileName = LOG_DIR + "test-logs_" + timestamp + ".log";
+		new File(LOG_DIR).mkdirs(); // Ensure the log directory exists
 		try {
-			logStream = new PrintStream(new FileOutputStream(logFileName, true));
+			this.logStream = new PrintStream(new FileOutputStream(logFileName, true));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// Private constructor to prevent instantiation
-	private APIManager() {
-	}
-
-	public static RequestSpecification getRequestSpec() {
-		return new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base.url"))
+	public RequestSpecification getRequestSpec() {
+		RequestSpecBuilder builder = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base.url"))
 				.addQueryParam(ConfigReader.getProperty("api.key.name"), ConfigReader.getProperty("api.key.value"))
-				.addHeader("Content-Type", "application/json")
-				.addFilter(new RequestLoggingFilter(LogDetail.ALL, logStream))
-				.addFilter(new ResponseLoggingFilter(LogDetail.ALL, logStream)).build();
+				.addHeader("Content-Type", "application/json");
+
+		if ("true".equalsIgnoreCase(System.getProperty("logging"))) {
+			builder.addFilter(new RequestLoggingFilter(LogDetail.ALL, logStream))
+					.addFilter(new ResponseLoggingFilter(LogDetail.ALL, logStream));
+		}
+		return builder.build();
 	}
 
-	public static String getLogFileName() {
-		return logFileName;
+	public String getLogFileName() {
+		return this.logFileName;
 	}
 
 }
