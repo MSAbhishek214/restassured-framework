@@ -2,11 +2,11 @@ package com.darkuros.restassured.stepdefinitions;
 
 import com.darkuros.restassured.payloadfactory.PayloadFactory;
 import com.darkuros.restassured.utils.APIManager;
-import com.darkuros.restassured.utils.ConfigReader;
+import com.darkuros.restassured.utils.JsonDataReader;
+import com.google.gson.JsonObject;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.restassured.RestAssured;
 
 public class AddPlaceSteps {
 
@@ -21,15 +21,20 @@ public class AddPlaceSteps {
 
 	@Given("Add Place Payload with name {string}, language {string}, and address {string}")
 	public void addPlacePayload(String name, String language, String address) {
-		// Base URI for the API
-		RestAssured.baseURI = ConfigReader.getProperty("base.url");
-		// Create a request specification with query parameters and headers
 		scenarioContext
 				.setReq(apiManager.getRequestSpec().body(PayloadFactory.createPlacePayload(name, address, language)));
 	}
 
+	@Given("Add Place Payload from file {string}")
+	public void addPlacePayload(String filename) {
+		JsonObject jsonData = new JsonDataReader().readTestData(filename);
+		scenarioContext.setReq(apiManager.getRequestSpec().body(jsonData.toString()));
+	}
+
 	@Then("store place_id from response")
 	public void storePlaceId() {
-		scenarioContext.setPlaceId(scenarioContext.getRes().jsonPath().getString("place_id"));
+		String placeIdFromResponse = scenarioContext.getRes().jsonPath().getString("place_id");
+		scenarioContext.setPlaceId(placeIdFromResponse);
+		System.out.println("Place ID stored: " + placeIdFromResponse);
 	}
 }

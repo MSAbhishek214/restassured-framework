@@ -2,7 +2,7 @@
 Feature: Add Place API
 
   Scenario: Successfully add a new place
-    Given Add Place Payload with name "Darkuros Cafe", language "English", and address "Bengaluru South"
+    Given Add Place Payload from file "addPlace.json"
     When user calls "ADD_PLACE" with "POST" http request
     Then the API call is successful with status code 200
     And "status" in response body is "OK"

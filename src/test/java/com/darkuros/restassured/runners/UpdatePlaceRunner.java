@@ -10,7 +10,7 @@ import static io.cucumber.junit.platform.engine.Constants.SNIPPET_TYPE_PROPERTY_
 
 @Suite
 @SelectClasspathResource("features/UpdatePlace.feature")
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.darkuros.restassured.stepdefinitions")
+@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.darkuros.restassured.stepdefinitions, com.darkuros.restassured.hooks")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
 @ConfigurationParameter(key = SNIPPET_TYPE_PROPERTY_NAME, value = "camelcase")
 public class UpdatePlaceRunner {
