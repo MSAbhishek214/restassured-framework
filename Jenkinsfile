@@ -19,7 +19,7 @@ pipeline {
             steps {
                 echo 'Building the project...'
                 // The 'clean install' command will download dependencies and compile the code.
-                sh 'mvn clean install'
+                bat 'mvn clean install'
             }
         }
 
@@ -31,10 +31,10 @@ pipeline {
                     def branchName = env.BRANCH_NAME
                     if (branchName == 'master') {
                         // Run tests in parallel for the master branch
-                        sh 'mvn test -Dconcurrency.strategy=dynamic -Denable.logs=false'
+                        bat 'mvn test -Dconcurrency.strategy=dynamic -Denable.logs=false'
                     } else {
                         // For other branches (like dev), run tests sequentially with logs
-                        sh 'mvn test -Dconcurrency.strategy=fixed -Dconcurrency.level=1 -Denable.logs=true'
+                        bat 'mvn test -Dconcurrency.strategy=fixed -Dconcurrency.level=1 -Denable.logs=true'
                     }
                 }
             }
