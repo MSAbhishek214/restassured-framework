@@ -24,7 +24,7 @@ It’s designed for clarity, maintainability, and interview‑ready architecture
 ---
 
 ## Running Tests
-Tagged scenario:
+Tagged scenarios:
 mvn test -Dcucumber.filter.tags="@PlaceLifeCycle"
 
 Example E2E Flow (PlaceLifeCycle.feature)
