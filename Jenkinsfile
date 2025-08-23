@@ -30,13 +30,6 @@ pipeline {
                 }
             }
         }
-
-        stage('Reporting') {
-            steps {
-                echo 'Archiving test reports...'
-                junit 'target/surefire-reports/**/*.xml'
-            }
-        }
     }
 
     post {
