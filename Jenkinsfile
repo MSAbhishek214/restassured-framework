@@ -9,49 +9,42 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // The pipeline automatically checks out the code from the Git repository
-                // that you configure in Jenkins.
                 echo 'Checking out code...'
             }
         }
 
-        stage('Build') {
+        stage('Build & Test') {
             steps {
-                echo 'Building the project...'
-                // The 'clean install' command will download dependencies and compile the code.
-                bat 'mvn clean install'
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                echo 'Running automation tests...'
-                // Get the current branch name
+                echo 'Building and running tests...'
                 script {
                     def branchName = env.BRANCH_NAME
                     if (branchName == 'master') {
+                        echo 'Running in parallel mode for the master branch.'
                         // Run tests in parallel for the master branch
-                        bat 'mvn test -Dtest=LifeCycleRunner -Dparallel=4 -Dlogging=false'
+                        bat 'mvn clean install -Dsurefire.test=LifeCycleRunner -Dparallel=4 -Dlogging=false'
                     } else {
+                        echo "Running in sequential mode for branch: ${branchName}"
                         // For other branches (like dev), run tests sequentially with logs
-                        bat 'mvn test -Dtest=LifeCycleRunner -Dparallel=1 -Dlogging=true'
+                        bat 'mvn clean install -Dsurefire.test=LifeCycleRunner -Dparallel=1 -Dlogging=true'
                     }
                 }
+            }
+        }
+
+        stage('Reporting') {
+            steps {
+                echo 'Archiving test reports...'
+                junit 'target/surefire-reports/**/*.xml'
             }
         }
     }
 
     post {
-        always {
-            // This block runs regardless of whether the pipeline succeeded or failed.
-            echo 'Archiving test reports...'
-            junit 'target/surefire-reports/**/*.xml'
-        }
         success {
             echo 'Build successful!'
         }
         failure {
-            echo 'Build failed. See the test results for details.'
+            echo 'Build failed. See the console output for details.'
         }
     }
 }
