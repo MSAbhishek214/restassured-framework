@@ -35,6 +35,5 @@ public class AddPlaceSteps {
 	public void storePlaceId() {
 		String placeIdFromResponse = scenarioContext.getRes().jsonPath().getString("place_id");
 		scenarioContext.setPlaceId(placeIdFromResponse);
-		System.out.println("Place ID stored: " + placeIdFromResponse);
 	}
 }

@@ -46,23 +46,11 @@ public class Hooks {
 	 */
 	@After
 	public void tearDown(Scenario scenario) {
-		scenario.log("Scenario completed: " + scenario.getName());
-
+		
 		try {
 			Files.lines(Paths.get(apiManager.getLogFileName())).forEach(line -> scenario.log(line));
 		} catch (IOException e) {
 			scenario.log("Could not attach logs. Error: " + e.getMessage());
 		}
-
-		/*
-		 * // The logic to attach console logs to the report byte[] consoleLogs = null;
-		 * try { consoleLogs = Files.readAllBytes(new
-		 * File(APIManager.getLogFileName()).toPath()); } catch (IOException e) {
-		 * e.printStackTrace(); } // Only attach logs if they are not null if
-		 * (consoleLogs != null) { scenario.attach(consoleLogs, "text/plain",
-		 * "Console Logs"); } This method doesnt attached the console logs to the report
-		 * properly I am gonna print each line from log to the report directly instead
-		 * of attaching the whole file.
-		 */
 	}
 }

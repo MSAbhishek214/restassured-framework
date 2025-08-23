@@ -31,10 +31,10 @@ pipeline {
                     def branchName = env.BRANCH_NAME
                     if (branchName == 'master') {
                         // Run tests in parallel for the master branch
-                        bat 'mvn test -Dconcurrency.strategy=dynamic -Denable.logs=false'
+                        bat 'mvn test -Dtest=LifeCycleRunner -Dparallel=4 -Dlogging=false'
                     } else {
                         // For other branches (like dev), run tests sequentially with logs
-                        bat 'mvn test -Dconcurrency.strategy=fixed -Dconcurrency.level=1 -Denable.logs=true'
+                        bat 'mvn test -Dtest=LifeCycleRunner -Dparallel=1 -Dlogging=true'
                     }
                 }
             }
