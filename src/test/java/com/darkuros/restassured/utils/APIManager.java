@@ -55,6 +55,12 @@ public final class APIManager {
 		return builder.build();
 	}
 
+	/**
+	 * Returns the name of the log file where API request and response logs are
+	 * stored.
+	 * 
+	 * @return The log file name as a String.
+	 */
 	public String getLogFileName() {
 		return this.logFileName;
 	}
