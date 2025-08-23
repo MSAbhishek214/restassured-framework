@@ -130,7 +130,7 @@
 				<version>3.5.3</version>
 				<configuration>
 					<includes>
-						<include>**/*Runner.java</include>
+						<include>LifeCycleRunner.java</include>
 					</includes>
 					<useModulePath>false</useModulePath>
 				</configuration>

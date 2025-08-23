@@ -17,16 +17,10 @@ pipeline {
             steps {
                 echo 'Building and running tests...'
                 script {
-                    def branchName = env.BRANCH_NAME
-                    if (branchName == 'master') {
-                        echo 'Running in parallel mode for the master branch.'
-                        // Run tests in parallel for the master branch
-                        bat 'mvn clean install -Dsurefire.test=LifeCycleRunner -Dparallel=4 -Dlogging=false'
-                    } else {
-                        echo "Running in sequential mode for branch: ${branchName}"
-                        // For other branches (like dev), run tests sequentially with logs
-                        bat 'mvn clean install -Dsurefire.test=LifeCycleRunner -Dparallel=1 -Dlogging=true'
-                    }
+						echo 'Running in parallel mode for the master branch.'
+                    	// Run tests in parallel for the master branch
+                   		bat 'mvn test -Dtest=LifeCycleRunner -Dparallel=4 -Dlogging=false'
+					}
                 }
             }
         }
