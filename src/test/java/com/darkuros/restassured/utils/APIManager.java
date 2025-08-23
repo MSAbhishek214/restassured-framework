@@ -19,6 +19,7 @@ import io.restassured.specification.RequestSpecification;
  * managing API requests, responses, and configurations.
  */
 public final class APIManager {
+	// Log file configuration
 	private final String LOG_DIR = "target/logs/";
 	private PrintStream logStream;
 	private String logFileName;
