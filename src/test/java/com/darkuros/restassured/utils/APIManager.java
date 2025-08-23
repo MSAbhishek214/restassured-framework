@@ -35,6 +35,14 @@ public final class APIManager {
 		}
 	}
 
+	/**
+	 * Constructs and returns a RequestSpecification object with predefined
+	 * configurations such as base URI, query parameters, and headers. If logging is
+	 * enabled via system properties, it also adds request and response logging
+	 * filters to capture detailed logs of API interactions.
+	 * 
+	 * @return A configured RequestSpecification object for making API requests.
+	 */
 	public RequestSpecification getRequestSpec() {
 		RequestSpecBuilder builder = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base.url"))
 				.addQueryParam(ConfigReader.getProperty("api.key.name"), ConfigReader.getProperty("api.key.value"))
