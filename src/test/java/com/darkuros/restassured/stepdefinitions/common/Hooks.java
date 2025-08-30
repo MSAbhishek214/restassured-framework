@@ -1,10 +1,10 @@
-package com.darkuros.restassured.hooks;
+package com.darkuros.restassured.stepdefinitions.common;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import com.darkuros.restassured.stepdefinitions.ScenarioContext;
+import com.darkuros.restassured.stepdefinitions.other.ScenarioContext;
 import com.darkuros.restassured.utils.APIManager;
 import com.darkuros.restassured.utils.ConfigReader;
 

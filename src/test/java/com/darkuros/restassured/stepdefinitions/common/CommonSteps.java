@@ -1,20 +1,21 @@
-// CommonAPISteps.java
-package com.darkuros.restassured.stepdefinitions;
+// CommonSteps.java
+package com.darkuros.restassured.stepdefinitions.common;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
+import com.darkuros.restassured.stepdefinitions.other.ScenarioContext;
 import com.darkuros.restassured.utils.APIResources;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.specification.RequestSpecification;
 
-public class CommonAPISteps {
+public class CommonSteps {
 
 	private final ScenarioContext scenarioContext;
 
-	public CommonAPISteps(ScenarioContext scenarioContext) {
+	public CommonSteps(ScenarioContext scenarioContext) {
 		this.scenarioContext = scenarioContext;
 	}
 

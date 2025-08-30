@@ -1,4 +1,4 @@
-package com.darkuros.restassured.stepdefinitions;
+package com.darkuros.restassured.stepdefinitions.other;
 
 import io.cucumber.java.Scenario;
 import io.restassured.response.Response;

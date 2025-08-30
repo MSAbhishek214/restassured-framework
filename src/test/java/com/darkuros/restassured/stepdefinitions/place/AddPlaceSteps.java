@@ -1,6 +1,7 @@
-package com.darkuros.restassured.stepdefinitions;
+package com.darkuros.restassured.stepdefinitions.place;
 
 import com.darkuros.restassured.payloadfactory.PayloadFactory;
+import com.darkuros.restassured.stepdefinitions.other.ScenarioContext;
 import com.darkuros.restassured.utils.APIManager;
 import com.darkuros.restassured.utils.JsonDataReader;
 import com.google.gson.JsonObject;
