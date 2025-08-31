@@ -1,9 +1,5 @@
 package com.darkuros.restassured.stepdefinitions.common;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import com.darkuros.restassured.stepdefinitions.other.ScenarioContext;
 import com.darkuros.restassured.utils.APIManager;
 import com.darkuros.restassured.utils.ConfigReader;
@@ -18,7 +14,8 @@ public class Hooks {
 	private final APIManager apiManager; // This gets injected by PicoContainer
 
 	/**
-	 * This method is executed before all scenarios in the test suite.
+	 * This method is executed before all scenarios in the test suite. It
+	 * initializes the configuration reader.
 	 */
 	@BeforeAll
 	public static void initialize() {
@@ -26,7 +23,8 @@ public class Hooks {
 	}
 
 	/**
-	 * This method gets the scenario object from ScenarioContext.
+	 * This method gets the scenario object from ScenarioContext. It also gets the
+	 * APIManager instance injected by PicoContainer.
 	 */
 	public Hooks(ScenarioContext scenarioContext, APIManager apiManager) {
 		this.scenarioContext = scenarioContext;
@@ -34,7 +32,8 @@ public class Hooks {
 	}
 
 	/**
-	 * This method is executed before each scenario.
+	 * This method is executed before each scenario. It sets the current scenario in
+	 * the ScenarioContext.
 	 */
 	@Before
 	public void setUp(Scenario scenario) {
@@ -42,15 +41,16 @@ public class Hooks {
 	}
 
 	/**
-	 * This method is executed after each scenario.
+	 * This method is executed after each scenario. If the scenario has failed, it
+	 * retrieves and prints the API logs
 	 */
 	@After
 	public void tearDown(Scenario scenario) {
-		
-		try {
-			Files.lines(Paths.get(apiManager.getLogFileName())).forEach(line -> scenario.log(line));
-		} catch (IOException e) {
-			scenario.log("Could not attach logs. Error: " + e.getMessage());
+		if (scenario.isFailed()) {
+			System.out.println("--- API Logs for failed test ---");
+			// Get logs from the correct APIManager instance for this scenario
+			System.out.println(apiManager.getLogs());
+			System.out.println("-------------------------------");
 		}
 	}
 }
