@@ -5,6 +5,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 import com.darkuros.restassured.stepdefinitions.other.ScenarioContext;
+import com.darkuros.restassured.utils.APIManager;
 import com.darkuros.restassured.utils.APIResources;
 
 import io.cucumber.java.en.Then;
@@ -14,9 +15,11 @@ import io.restassured.specification.RequestSpecification;
 public class CommonSteps {
 
 	private final ScenarioContext scenarioContext;
+	private final APIManager apiManager;
 
-	public CommonSteps(ScenarioContext scenarioContext) {
+	public CommonSteps(ScenarioContext scenarioContext, APIManager apiManager) {
 		this.scenarioContext = scenarioContext;
+		this.apiManager = apiManager;
 	}
 
 	@When("user calls {string} with {string} http request")
@@ -47,7 +50,7 @@ public class CommonSteps {
 
 	@Then("the API call is successful with status code {int}")
 	public void validateStatusCode(int code) {
-		scenarioContext.getRes().then().statusCode(code);
+		scenarioContext.getRes().then().spec(apiManager.getResponseSpec(code));
 	}
 
 	@Then("{string} in response body is {string}")

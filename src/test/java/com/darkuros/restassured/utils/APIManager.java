@@ -8,15 +8,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
+import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 
 /**
- * APIManager is a utility class that manages API-related operations. It is
- * currently empty but can be extended in the future to include methods for
- * managing API requests, responses, and configurations.
+ * APIManager is a utility class that manages API-related operations.
+ * It provides methods to create and configure RequestSpecification and
+ * ResponseSpecification objects for making API requests and validating responses.
  */
 public final class APIManager {
 	// Log file configuration
@@ -54,6 +57,18 @@ public final class APIManager {
 					.addFilter(new ResponseLoggingFilter(LogDetail.ALL, logStream));
 		}
 		return builder.build();
+	}
+
+	/**
+	 * Constructs and returns a ResponseSpecification object with predefined
+	 * configurations such as expected content type and status code.
+	 * 
+	 * @param statusCode The expected HTTP status code for the response.
+	 * @return A configured ResponseSpecification object for validating API
+	 *         responses.
+	 */
+	public ResponseSpecification getResponseSpec(int statusCode) {
+		return new ResponseSpecBuilder().expectContentType(ContentType.JSON).expectStatusCode(statusCode).build();
 	}
 
 	/**

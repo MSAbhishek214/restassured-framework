@@ -5,8 +5,6 @@ Feature: End to End Place Life Cycle
 	    Given Add Place Payload with name "<name>", language "<language>", and address "<address>"
         When user calls "ADD_PLACE" with "POST" http request
         Then the API call is successful with status code 200
-	    When user calls "ADD_PLACE" with "POST" http request
-	    Then the API call is successful with status code 200
 	    And "status" in response body is "OK"
 	    And "scope" in response body is "APP"
 	    And store place_id from response
@@ -14,7 +12,7 @@ Feature: End to End Place Life Cycle
 	    Given Get Place Payload with a place id
 		When user calls "GET_PLACE" with "GET" http request
 		Then the API call is successful with status code 200
-		And "address" in response body is "Bengaluru South"
+		And "address" in response body is "<address>"
 		
 		Given Update Place Payload with new address "70 Summer walk, USA"
 	    When user calls "UPDATE_PLACE" with "PUT" http request
@@ -39,3 +37,4 @@ Feature: End to End Place Life Cycle
 		Examples:
 	        | name            	| language | address            	|
             | Darkuros Cafe   	| English  | Bengaluru South    	|
+            
